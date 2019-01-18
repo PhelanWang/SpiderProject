@@ -10,11 +10,11 @@ class WallpaperSpider(scrapy.Spider):
     start_urls = ['https://www.gamersky.com/ent/wp/']
 
     def parse(self, response):
-        page_list = response.xpath('//ul[@class="pictxt"]/li')
+        page_list = response.xpath('//ul[@class="pictxt contentpaging"]/li')
         for page in page_list:
             page_url = page.xpath('div[@class="img"]/a/@href').extract()
             if page_url:
-                yield Request(url=page_url[0], callback=self.parse_page)
+                yield Request(url=urljoin(self.start_urls[0], page_url[0]), callback=self.parse_page)
 
         next_url = response.xpath('//span[@class="pagecss"]/a[@class="p1 nexe"]/@href').extract()
         if next_url:

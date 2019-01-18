@@ -18,14 +18,15 @@ class WallpapercrawlerPipeline(object):
         file = file_path+'\\'+file_name
         if not os.path.exists(file):
             self.download_image(item['img_url'], file)
+            print('#', end=' ')
         else:
-            print('exist. . .')
+            print('.', end=' ')
 
     def download_image(self, url, file):
         try:
             urllib.request.urlretrieve(url, file)
         except Exception as e:
-            print('Error: '+url+' '+file)
+            print('\nError: '+url+' '+file)
 
 
 # d = WallpapercrawlerPipeline()
